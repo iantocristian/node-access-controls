@@ -310,8 +310,13 @@ AccessControlList.prototype.authorize = function(obj, action, roles, context, ca
 
     } else {
       // conditions say this ACL does not apply
-      authorize = true
-      reason    = conditionsMatch.reason || 'ACL conditions do not apply'
+      if(this.control() === 'sufficient') {
+        authorize = false
+      }
+      else {
+        authorize = true
+        reason = conditionsMatch.reason || 'ACL conditions do not apply'
+      }
     }
 
   } else {
